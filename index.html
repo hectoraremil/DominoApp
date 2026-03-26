@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Domino Beriguete</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <!-- Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app" class="app-container">
+        
+        <!-- HEADER -->
+        <header class="glass-header">
+            <div class="header-content">
+                <i class="ri-grid-fill logo-icon"></i>
+                <h1>Domino Beriguete</h1>
+            </div>
+        </header>
+
+        <!-- MAIN CONTENT AREA -->
+        <main id="main-content" class="main-content">
+            
+            <!-- VIEW: SETUP MENU -->
+            <section id="view-setup" class="view active-view">
+                <div class="glass-card fade-in">
+                    <h2>Nueva Partida</h2>
+                    <p class="subtitle">Selecciona la modalidad de juego</p>
+                    
+                    <div class="mode-selector">
+                        <button class="btn-mode active" data-mode="2">
+                            <i class="ri-user-line"></i>
+                            <span>1 vs 1</span>
+                        </button>
+                        <button class="btn-mode" data-mode="4">
+                            <i class="ri-team-line"></i>
+                            <span>Parejas</span>
+                        </button>
+                    </div>
+
+                    <p class="subtitle mt-1" style="margin-bottom: 0.5rem; color: var(--text-main);">Puntuación Límite</p>
+                    <div class="score-limit-selector mb-2">
+                        <button class="btn-limit active" data-limit="200">200 Pts</button>
+                        <button class="btn-limit" data-limit="100">100 Pts</button>
+                    </div>
+
+                    <div id="players-form-container" class="players-form">
+                        <!-- Instantiated by JS -->
+                    </div>
+
+                    <button id="btn-start-game" class="btn-primary float-up">
+                        <span>Iniciar Juego</span>
+                        <i class="ri-arrow-right-line"></i>
+                    </button>
+                </div>
+            </section>
+
+            <!-- VIEW: SCOREBOARD -->
+            <section id="view-scoreboard" class="view hidden">
+                <div class="scoreboard-container fade-in">
+                    <!-- Teams Header -->
+                    <div class="teams-header">
+                        <div class="team-card glass-card team-a">
+                            <div class="team-avatars" id="team-a-avatars"></div>
+                            <h3 id="team-a-name">Equipo A</h3>
+                            <div class="score-display">
+                                <span id="team-a-score">0</span>
+                            </div>
+                        </div>
+                        <div class="vs-badge glass-card">VS</div>
+                        <div class="team-card glass-card team-b">
+                            <div class="team-avatars" id="team-b-avatars"></div>
+                            <h3 id="team-b-name">Equipo B</h3>
+                            <div class="score-display">
+                                <span id="team-b-score">0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Add Points Area -->
+                    <div class="add-points-controls glass-card">
+                        <p class="section-title">Anotar Puntos</p>
+                        <div class="keypad-input-area">
+                            <input type="number" id="points-input" class="glass-input big-input" placeholder="0" readonly>
+                            <button id="btn-backspace" class="btn-icon"><i class="ri-delete-back-2-line"></i></button>
+                        </div>
+                        
+                        <div class="keypad">
+                            <button class="key">1</button>
+                            <button class="key">2</button>
+                            <button class="key">3</button>
+                            <button class="key">4</button>
+                            <button class="key">5</button>
+                            <button class="key">6</button>
+                            <button class="key">7</button>
+                            <button class="key">8</button>
+                            <button class="key">9</button>
+                            <button class="key capicua-btn" data-val="100">C</button>
+                            <button class="key">0</button>
+                            <button class="key paso-btn" data-val="25">P</button>
+                        </div>
+                        
+                        <div class="assign-points-area">
+                            <button id="btn-add-team-a" class="btn-primary assign-btn">
+                                <i class="ri-arrow-left-line"></i> Equipo A
+                            </button>
+                            <button id="btn-add-team-b" class="btn-secondary assign-btn">
+                                Equipo B <i class="ri-arrow-right-line"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Score History -->
+                    <div class="history-container glass-card">
+                        <div class="history-header">
+                            <p class="section-title">Historial</p>
+                            <button id="btn-undo" class="btn-icon text-btn"><i class="ri-arrow-go-back-line"></i> Deshacer</button>
+                        </div>
+                        <div class="history-list" id="history-list">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                    
+                    <button id="btn-end-game" class="btn-danger full-width mt-1">
+                        <i class="ri-refresh-line"></i> Terminar Partida
+                    </button>
+                </div>
+            </section>
+        </main>
+
+        <!-- MODAL WINNER -->
+        <div id="modal-winner" class="modal-winner hidden">
+            <div class="modal-backdrop"></div>
+            <div class="modal-content">
+                <div class="winner-trophy">
+                    <i class="ri-trophy-fill"></i>
+                </div>
+                <h2 class="winner-title">🏆 CAMPEONES 🏆</h2>
+                <div class="winner-photo-container">
+                    <img id="winner-photo" src="" alt="Winner">
+                </div>
+                <h3 id="winner-name" class="winner-name"></h3>
+                <div class="winner-score">
+                    <span id="winner-points">0</span> PUNTOS
+                </div>
+                <div class="winner-stars">⭐⭐⭐⭐⭐</div>
+                <div class="winner-buttons">
+                    <button id="btn-new-game" class="btn-primary">
+                        <i class="ri-refresh-line"></i> Nueva Partida
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- HIDDEN CAMERA INPUT -->
+        <input type="file" id="camera-input" accept="image/*" capture="environment" class="hidden-input">
+        
+    </div>
+    
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
