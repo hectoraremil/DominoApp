@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generar Icono</title>
+</head>
+<body>
+    <h2>Click en el botón para descargar el icono:</h2>
+    <button onclick="downloadIcon()" style="padding:20px;font-size:20px;cursor:pointer;">Descargar icon.png</button>
+    <br><br>
+    <canvas id="canvas" width="192" height="192" style="border:1px solid #ccc;display:none;"></canvas>
+    
+    <script>
+        function downloadIcon() {
+            const canvas = document.getElementById('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Fondo morado rounded
+            ctx.fillStyle = '#6366f1';
+            ctx.beginPath();
+            ctx.roundRect(0, 0, 192, 192, 30);
+            ctx.fill();
+            
+            // Fichas de dominó blanca
+            ctx.fillStyle = '#ffffff';
+            ctx.beginPath();
+            ctx.roundRect(25, 45, 55, 70, 10);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.roundRect(112, 45, 55, 70, 10);
+            ctx.fill();
+            
+            // Puntos morados
+            ctx.fillStyle = '#6366f1';
+            const drawDot = (x, y) => { ctx.beginPath(); ctx.arc(x, y, 5, 0, Math.PI*2); ctx.fill(); };
+            
+            // Ficha izquierda (3-2)
+            drawDot(42, 60); drawDot(52, 60); drawDot(62, 60);
+            drawDot(47, 80); drawDot(57, 80);
+            
+            // Ficha derecha (3-2)  
+            drawDot(129, 60); drawDot(139, 60); drawDot(149, 60);
+            drawDot(134, 80); drawDot(144, 80);
+            
+            // Descargar
+            const link = document.createElement('a');
+            link.download = 'icon.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+            alert('Icono descargado! Sube icon.png a tu repositorio GitHub');
+        }
+    </script>
+</body>
+</html>
